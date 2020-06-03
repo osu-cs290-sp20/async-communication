@@ -21,13 +21,15 @@ function handleModalAcceptClick() {
     alert("You must fill in all of the fields!");
   } else {
 
-    var photoCardTemplate = Handlebars.templates.photoCard;
-    var newPhotoCardHTML = photoCardTemplate({
-      url: photoURL,
-      caption: caption
-    });
-    var photoCardContainer = document.querySelector('.photo-card-container');
-    photoCardContainer.insertAdjacentHTML('beforeend', newPhotoCardHTML);
+    var request = new XMLHttpRequest();
+
+    // var photoCardTemplate = Handlebars.templates.photoCard;
+    // var newPhotoCardHTML = photoCardTemplate({
+    //   url: photoURL,
+    //   caption: caption
+    // });
+    // var photoCardContainer = document.querySelector('.photo-card-container');
+    // photoCardContainer.insertAdjacentHTML('beforeend', newPhotoCardHTML);
 
     hideModal();
 
