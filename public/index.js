@@ -22,14 +22,34 @@ function handleModalAcceptClick() {
   } else {
 
     var request = new XMLHttpRequest();
+    var requestUrl = "/people/" + getPersonIdFromURL() + "/addPhoto";
+    request.open('POST', requestUrl);
 
-    // var photoCardTemplate = Handlebars.templates.photoCard;
-    // var newPhotoCardHTML = photoCardTemplate({
-    //   url: photoURL,
-    //   caption: caption
-    // });
-    // var photoCardContainer = document.querySelector('.photo-card-container');
-    // photoCardContainer.insertAdjacentHTML('beforeend', newPhotoCardHTML);
+    var requestBody = JSON.stringify({
+      url: photoURL,
+      caption: caption
+    });
+
+    request.setRequestHeader(
+      'Content-Type',
+      'application/json'
+    );
+
+    request.addEventListener('load', function (event) {
+      if (event.target.status === 200) {
+        var photoCardTemplate = Handlebars.templates.photoCard;
+        var newPhotoCardHTML = photoCardTemplate({
+          url: photoURL,
+          caption: caption
+        });
+        var photoCardContainer = document.querySelector('.photo-card-container');
+        photoCardContainer.insertAdjacentHTML('beforeend', newPhotoCardHTML);
+      } else {
+        alert("Error storing photo in database: " + event.target.response);
+      }
+    });
+
+    request.send(requestBody);
 
     hideModal();
 
